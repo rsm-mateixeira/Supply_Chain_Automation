@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block main %}
+
+<div class="alerts-container">
+    <h2>📦 Past Orders by Supplier</h2>
+
+    {% for supplier, orders in orders_by_supplier.items %}
+    <div class="supplier-box">
+        <h3>{{ supplier }}</h3> <!-- Supplier Name as Header -->
+
+        {% for order in orders %}
+        <div class="old-alert-box">
+            <div class="old-alert-content">
+                <div class="old-alert-details">
+                    <p><strong>Date:</strong> {{ order.date }}</p>
+                    <p><strong>Location:</strong> {{ order.location }}</p>
+                    <p><strong>Increase Needed:</strong> {{ order.units_increase }}</p>
+                    <p><strong>Order Cost:</strong> ${{ order.order_cost }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% empty %}
+    <p>No past orders at the moment.</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

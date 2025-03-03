@@ -1,0 +1,60 @@
+{% extends 'layout.html' %} 
+{% block main %} 
+{% load static %}
+
+<div class="alerts-container">
+    <h2>🚨 Capacity Increase Alerts</h2>
+
+    {% for city, alerts in alerts_by_city.items %}
+    <div class="city-box">
+        <h3>{{ city }}</h3>
+
+        {% for alert in alerts %}
+        <div class="alert-box">
+            <div class="alert-content">
+                <div class="alert-details">
+                    <p><strong>Date:</strong> {{ alert.date }}</p>
+                    <p><strong>Existing Capacity:</strong> {{ alert.remaining_capacity }}</p>
+                    <p><strong>Increase Needed:</strong> {{ alert.units_increase }}</p>
+                    <p><strong>Order Cost:</strong> ${{ alert.order_cost }}</p>
+                    <p><strong>Supplier Chosen:</strong> {{ alert.supplier_chosen|default:"N/A" }}</p>
+                </div>
+                <div class="alert-buttons">
+                    <a href="{% url 'supplychain:generate_report' alert.id %}" class="report-btn">📄 Generate Report</a>
+                    <form action="{% url 'supplychain:accept_order' alert.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="accept-btn">✔ Accept</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% empty %}
+    <p>No alerts at the moment! 🎉</p>
+    {% endfor %}
+
+    <h2>📌 Old Alerts Accepted</h2>
+
+    {% for old_alert in old_alerts %}
+    <div class="old-alert-box">
+        <div class="old-alert-content">
+            <div class="old-alert-details">
+                <p><strong>Date:</strong> {{ old_alert.date }}</p>
+                <p><strong>Location:</strong> {{ old_alert.location }}</p>
+                <p><strong>Increase Needed:</strong> {{ old_alert.units_increase }}</p>
+                <p><strong>Order Cost:</strong> ${{ old_alert.order_cost }}</p>
+                <p><strong>Supplier Chosen:</strong> {{ old_alert.supplier_chosen|default:"N/A" }}</p>
+            </div>
+            <div class="alert-buttons">
+                <a href="{% url 'supplychain:generate_report' old_alert.id %}" class="report-btn">📄 Generate Report</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No old alerts.</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

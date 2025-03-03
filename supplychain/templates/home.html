@@ -1,0 +1,16 @@
+{% extends 'layout.html' %} {% block main %} {% load static %}
+
+
+<div class="chat-container">
+    <div class="chat-box" id="chat-box">
+        <div class="message bot">Hello! How can I assist you with supply chain decisions today?</div>
+    </div>
+
+    <div class="chat-input">
+        {% csrf_token %}
+        <input type="text" id="chat-input-field" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+{% endblock %}

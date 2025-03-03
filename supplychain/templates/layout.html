@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'scripts/script.js' %}"></script>
+    <meta name="author" content="Martim Teixeira"/>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Supply Chain Specialist</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div>
+            <div class="logo">Supply Chain Specialist</div>
+            <a href="{% url 'supplychain:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Chat</a>
+            <a href="{% url 'supplychain:alerts' %}" class="{% if request.resolver_match.url_name == 'alerts' %}active{% endif %}">Alerts</a>
+            <a href="{% url 'supplychain:orders' %}" class="{% if request.resolver_match.url_name == 'orders' %}active{% endif %}">Orders</a>
+        </div>
+    </div>
+
+    <div class="content">
+        {% block main %}{% endblock %}
+    </div>
+</body>
+</html>
